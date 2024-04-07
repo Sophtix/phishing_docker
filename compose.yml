@@ -1,0 +1,57 @@
+services:
+  mysql:
+    container_name: mysql
+    build: 
+      context: ./mysql
+      dockerfile: Dockerfile
+      args:
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    
+  gophish:
+    container_name: gophish
+    build:
+      context: ./gophish
+      dockerfile: Dockerfile
+      args:
+        DB_HOST: mysql
+        DB_USER: ${MYSQL_USER}
+        DB_PASS: ${MYSQL_PASSWORD}
+    ports:
+      - "3333:3333"
+    depends_on:
+      - mysql
+
+  evilgophish:
+    container_name: evilgophish
+    build:
+      context: ./evilgophish
+      dockerfile: Dockerfile
+      args:
+        DB_HOST: mysql
+        DB_USER: ${MYSQL_USER}
+        DB_PASS: ${MYSQL_PASSWORD}
+    ports:
+      - "4444:4444"
+    depends_on:
+      - mysql
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+      args:
+        GOPHISH_HOST: gophish
+        EVILGOPHISH_HOST: evilgophish
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - gophish
+      - evilgophish
+
