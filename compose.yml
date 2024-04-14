@@ -42,16 +42,23 @@ services:
 
   nginx:
     container_name: nginx
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-      args:
-        GOPHISH_HOST: gophish
-        EVILGOPHISH_HOST: evilgophish
+    image: nginx:latest
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d/:ro
+      - ./certbot/www/:/var/www/certbot/:ro
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - gophish
       - evilgophish
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
