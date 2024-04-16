@@ -1,0 +1,46 @@
+{
+    "ip": "104.248.86.146",
+    "dns": {
+        "MX": [
+        {
+          "name": "{{domain}}",
+          "content": "mail.helpdesktops.com",
+          "priority": 10  
+        }],
+        "A": [
+        {
+            "name": "@",
+            "content": "{{ip}}"
+        }],
+        "TXT": [
+        {
+            "name": "@",
+            "content": "v=spf1 include:helpdesktops.com -all"
+        },
+        {  
+            "name": "_dmarc",
+            "content": "v=DMARC1;p=quarantine;rua=mailto:reports@{{domain}};"
+        },
+        {
+            "name": "dkim._domain",
+            "content": "{{dkim}}"
+        }]
+    },
+    "mailcow": {
+        "url": "https://142.93.128.23/api/v1",
+        "apikey": "35A412-4CEADC-1ED607-489B8C-340FEA",
+        "mailbox_passowrd": "t3jVn3hL"
+    },
+    "godaddy" : {
+        "url": "https://api.godaddy.com",
+        "nameservers": ["ns43.domaincontrol.com", "ns44.domaincontrol.com"],
+        "secret": "SoVEYPm1anQAx6oEfJSEXK",
+        "apikey": "dKt57iUpZ915_W3yTqwmF2aDhnt7um6NYbs"
+    },
+    "cloudflare" : {
+        "url": "https://api.cloudflare.com/client/v4/zones",
+        "apikey": "3QXBcXu48tSX04AbyhvGdDNtySNFWR_AQ2XqLONG",
+        "email": "itay.c@sophtix.com",
+        "nameservers": ["ns1.cloudflare.com", "ns2.cloudflare.com"]
+    }
+}
