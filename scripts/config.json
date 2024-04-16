@@ -1,0 +1,46 @@
+{
+    "ip": "asd",
+    "dns": {
+        "MX": [
+        {
+          "name": "{{domain}}",
+          "content": "mail.helpdesktops.com",
+          "priority": 10  
+        }],
+        "A": [
+        {
+            "name": "@",
+            "content": "{{ip}}"
+        }],
+        "TXT": [
+        {
+            "name": "@",
+            "content": "v=spf1 include:helpdesktops.com -all"
+        },
+        {  
+            "name": "_dmarc",
+            "content": "v=DMARC1;p=quarantine;rua=mailto:reports@{{domain}};"
+        },
+        {
+            "name": "dkim._domain",
+            "content": "{{dkim}}"
+        }]
+    },
+    "mailcow": {
+        "url": "https://142.93.128.23/api/v1",
+        "apikey": "asd",
+        "mailbox_passowrd": "asd"
+    },
+    "godaddy" : {
+        "url": "https://api.godaddy.com",
+        "secret": "asd",
+        "apikey": "asd",
+        "nameservers": ["ns43.domaincontrol.com", "ns44.domaincontrol.com"]
+    },
+    "cloudflare" : {
+        "url": "https://api.cloudflare.com/client/v4/zones",
+        "apikey": "key",
+        "email": "email",
+        "nameservers": ["ns1.cloudflare.com", "ns2.cloudflare.com"]
+    }
+}
