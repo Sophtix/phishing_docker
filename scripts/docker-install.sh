@@ -8,5 +8,6 @@ docker compose run --rm certbot certonly --webroot -w /var/www/certbot/ -d gophi
 docker compose run --rm certbot certonly --webroot -w /var/www/certbot/ -d evil.gophish.live --register-unsafely-without-email
 
 # Activate https for admin servers
+# remove sudo by adding user to group
 sudo sed -i 's/#//g' nginx/conf.d/default.conf
 docker compose exec nginx nginx -s reload
