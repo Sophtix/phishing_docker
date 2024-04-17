@@ -3,6 +3,7 @@ import json
 import requests
 import subprocess
 
+
 def config_smtp(domain: str, sender: str) -> str:
     """
     Configures SMTP for a domain, create a mailbox for the phishing sender
@@ -119,7 +120,7 @@ def config_cloudflare(domain: str, dkim: str):
     res.raise_for_status()
 
 
-def main():
+def main(domain, sender, provider):
     dkim = config_smtp(domain, sender)
     match provider:
         case "godaddy":
@@ -135,13 +136,9 @@ if __name__ == "__main__":
     parser.add_argument("provider", choices=["godaddy", "cloudflare"], help="DNS provider to configure")
     parser.add_argument("-d", "--domain", help="Domain to add", required=True)
     parser.add_argument("-s", "--sender", help="Phishing sender", required=True)
-
     args = parser.parse_args()
-    provider = args.provider
-    domain = args.domain
-    sender = args.sender
 
     config = json.load(open("config.json"))
 
-    main()
+    main(args.domain, args.sender, args.provider)
 
