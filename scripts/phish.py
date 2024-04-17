@@ -86,8 +86,8 @@ def config_godaddy(domain: str, dkim: str):
 
     # Set DNS records
     dns_records = generate_dns_records(domain, dkim)
-    # nameservers = [{"type": "NS", "data": ns, "name": "@", "ttl": 600} for ns in godaddy_config['nameservers']]
-    # dns_records.extend(nameservers)
+    nameservers = [{"type": "NS", "data": ns, "name": "@", "ttl": 600} for ns in godaddy_config['nameservers']]
+    dns_records.extend(nameservers)
 
     res = session.put(f"{base_url}/v1/domains/{domain}/records", json=dns_records)
     if res.status_code != 200:
