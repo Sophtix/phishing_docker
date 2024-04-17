@@ -2,6 +2,7 @@ import argparse
 import json
 import requests
 import subprocess
+from os import path
 
 
 def config_smtp(domain: str, sender: str) -> str:
@@ -138,7 +139,9 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--sender", help="Phishing sender", required=True)
     args = parser.parse_args()
 
-    config = json.load(open("config.json"))
+    config_path = path.dirname(path.realpath(__file__) + "/config.json")
+    with open(config_path) as f:
+        config = json.load(f)
 
     main(args.domain, args.sender, args.provider)
 
