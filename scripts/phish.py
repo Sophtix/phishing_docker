@@ -3,6 +3,9 @@ import json
 import requests
 import subprocess
 from pathlib import Path
+import urllib3
+
+urllib3.disable_warnings()
 
 
 def config_smtp(domain: str, sender: str) -> str:
@@ -83,6 +86,9 @@ def config_godaddy(domain: str, dkim: str):
 
     # Set DNS records
     dns_records = generate_dns_records(domain, dkim)
+    nameservers = [{"data": ns, "name": "@", "ttl": 600} for ns in godaddy_config['nameservers']]
+    dns_records.extend(nameservers)
+    dns_records.append({"type": "SOA", "name": "@", "data": f"Primary nameserver {godaddy_config['nameservers'][0]}", "ttl": 600})
 
     res = session.put(f"{base_url}/v1/domains/{domain}/records", json=dns_records)
     res.raise_for_status()

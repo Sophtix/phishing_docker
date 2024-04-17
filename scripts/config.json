@@ -34,7 +34,8 @@
     "godaddy" : {
         "url": "https://api.godaddy.com/",
         "secret": "asd",
-        "apikey": "asd"
+        "apikey": "asd",
+        "nameservers": ["ns43.godaddy.com", "ns44.godaddy.com"]
     },
     "cloudflare" : {
         "url": "https://api.cloudflare.com/client/v4/zones",
