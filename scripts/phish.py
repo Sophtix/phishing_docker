@@ -46,7 +46,8 @@ def config_smtp(domain: str, sender: str) -> str:
 
 def config_nginx(domain: str):
     print(f"Configuring Nginx for {domain}")
-    proc = subprocess.run(["bash", "add_domain.sh", domain], shell=True, capture_output=True)
+    add_domain_path = Path(__file__).parent / "add_domain.sh"
+    proc = subprocess.run(["/bin/bash", add_domain_path, domain], shell=True, capture_output=True)
     if proc.returncode != 0:
         print(proc.stderr.decode())
         exit(1)
@@ -78,7 +79,7 @@ def config_godaddy(domain: str, dkim: str):
     godaddy_config = config['godaddy']
     base_url = godaddy_config['url']
     session = requests.Session()
-    session.headers.update({"Authorization": f"sso-key {godaddy_config['key']}:{godaddy_config['secret']}"})
+    session.headers.update({"Authorization": f"sso-key {godaddy_config['apikey']}:{godaddy_config['secret']}"})
 
     # Set DNS records
     dns_records = generate_dns_records(domain, dkim)
@@ -92,7 +93,7 @@ def config_cloudflare(domain: str, dkim: str):
     godaddy_config = config['godaddy']
     base_url = godaddy_config['url']
     session = requests.Session()
-    session.headers.update({"Authorization": f"sso-key {godaddy_config['key']}:{godaddy_config['secret']}"})
+    session.headers.update({"Authorization": f"sso-key {godaddy_config['apikey']}:{godaddy_config['secret']}"})
 
     # Replace NS records in godaddy
     ns_records = [{"data": ns, "name": "@", "ttl": 600} for ns in config['cloudflare']['nameservers']]
