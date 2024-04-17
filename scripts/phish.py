@@ -91,7 +91,9 @@ def config_godaddy(domain: str, dkim: str):
     dns_records.append({"type": "SOA", "name": "@", "data": f"Primary nameserver {godaddy_config['nameservers'][0]}", "ttl": 600})
 
     res = session.put(f"{base_url}/v1/domains/{domain}/records", json=dns_records)
-    res.raise_for_status()
+    if res.status_code != 200:
+        print(res.json())
+        exit(1)
 
 
 def config_cloudflare(domain: str, dkim: str):
