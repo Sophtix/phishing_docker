@@ -65,7 +65,7 @@ def generate_dns_records(domain: str, dkim: str) -> list[dict[str, str]]:
     for record_type, records in records_data.items():
         for record in records:
             data = {
-                "type": record_type,
+                "type": record_type.upper(),
                 "name": record['name'].replace("{{domain}}", domain),
                 "data": record['content'].replace("{{domain}}", domain).replace("{{ip}}", machine_ip).replace("{{dkim}}", dkim),
                 "ttl": 600,

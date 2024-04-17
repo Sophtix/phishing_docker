@@ -1,7 +1,7 @@
 {
     "ip": "asd",
     "dns": {
-        "mx": [
+        "MX": [
         {
           "name": "{{domain}}",
           "content": "mail.helpdesktops.com",
