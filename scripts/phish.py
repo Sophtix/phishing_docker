@@ -17,7 +17,7 @@ def config_smtp(domain: str, sender: str) -> str:
     base_url = mailcow_config['url']
     session = requests.Session()
     session.verify = False
-    session.headers.update({"X-API-Key": f"{config['apikey']}"})
+    session.headers.update({"X-API-Key": f"{mailcow_config['apikey']}"})
 
     # Add domain
     add_domain = {
