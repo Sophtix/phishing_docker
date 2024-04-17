@@ -130,12 +130,14 @@ def config_cloudflare(domain: str, dkim: str):
 
 def main(domain, sender, provider):
     dkim = config_smtp(domain, sender)
+    if not dkim:
+        print("Failed to configure SMTP")
+        exit(1)
     match provider:
         case "godaddy":
             config_godaddy(domain, dkim)
         case "cloudflare":
-            config_cloudflare(domain)
-
+            config_cloudflare(domain, dkim)
     config_nginx(domain)
 
 

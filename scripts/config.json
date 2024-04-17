@@ -32,7 +32,7 @@
         "mailbox_passowrd": "asd"
     },
     "godaddy" : {
-        "url": "https://api.godaddy.com/",
+        "url": "https://api.godaddy.com",
         "secret": "asd",
         "apikey": "asd",
         "nameservers": ["ns43.godaddy.com", "ns44.godaddy.com"]
