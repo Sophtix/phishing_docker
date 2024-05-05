@@ -38,7 +38,8 @@ def config_smtp(domain: str, sender: str) -> str:
         "domain": domain,
         "local_part": sender,
         "name": sender,
-        "password": mailcow_config['mailbox_passowrd']
+        "password": mailcow_config['mailbox_passowrd'],
+        "password2": mailcow_config['mailbox_passowrd']
     }
     res = session.post(f"{base_url}/add/mailbox", json=add_mailbox)
     res.raise_for_status()
