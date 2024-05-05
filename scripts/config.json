@@ -1,5 +1,5 @@
 {
-    "ip": "asd",
+    "ip": "104.248.86.146",
     "dns": {
         "MX": [
         {
@@ -28,19 +28,19 @@
     },
     "mailcow": {
         "url": "https://142.93.128.23/api/v1",
-        "apikey": "asd",
-        "mailbox_passowrd": "asd"
+        "apikey": "35A412-4CEADC-1ED607-489B8C-340FEA",
+        "mailbox_passowrd": "t3jVn3hL"
     },
     "godaddy" : {
         "url": "https://api.godaddy.com",
-        "secret": "asd",
-        "apikey": "asd",
-        "nameservers": ["ns43.domaincontrol.com", "ns44.domaincontrol.com"]
+        "nameservers": ["ns43.domaincontrol.com", "ns44.domaincontrol.com"],
+        "secret": "SoVEYPm1anQAx6oEfJSEXK",
+        "apikey": "dKt57iUpZ915_W3yTqwmF2aDhnt7um6NYbs"
     },
     "cloudflare" : {
         "url": "https://api.cloudflare.com/client/v4/zones",
-        "apikey": "key",
-        "email": "email",
+        "apikey": "3QXBcXu48tSX04AbyhvGdDNtySNFWR_AQ2XqLONG",
+        "email": "itay.c@sophtix.com",
         "nameservers": ["ns1.cloudflare.com", "ns2.cloudflare.com"]
     }
 }
