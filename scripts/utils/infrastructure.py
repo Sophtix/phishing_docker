@@ -2,7 +2,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
-
+import sys
 import requests
 import urllib3
 
@@ -49,17 +49,18 @@ def config_smtp(domain: str, sender: str) -> str:
     return res.json()['dkim_txt']
 
 
-def config_nginx(domain: str):
-    print(f"Configuring Nginx for {domain}")
-    add_domain_path = Path(__file__).parent / "add_domain.sh"
-    proc = subprocess.Popen(f"/bin/bash {add_domain_path} {domain}", shell=True, text=True, stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=add_domain_path.parent.parent)
-    while proc.poll() is None:
-        stdout, stderr = proc.communicate()
-        if stdout:
-            print(stdout)
-        if stderr:
-            print(stderr)
+# def config_nginx(domain: str):
+#     print(f"Configuring Nginx for {domain}")
+#     add_domain_path = Path(__file__).parent / "add_domain.sh"
+#     proc = subprocess.Popen(f"/bin/bash {add_domain_path} {domain}", shell=True, text=True, stdin=subprocess.PIPE,
+#                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=add_domain_path.parent.parent)
+#     while proc.poll() is None:
+#         stdout, stderr = proc.communicate()
+#         if stdout:
+#             print(stdout)
+#         if stderr:
+#             print(stderr)
+        
 
 
 def generate_dns_records(domain: str, dkim: str) -> list[dict[str, str]]:
@@ -146,12 +147,12 @@ def main(domain, sender, provider):
             config_godaddy(domain, dkim)
         case "cloudflare":
             config_cloudflare(domain, dkim)
-    config_nginx(domain)
+    # config_nginx(domain)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Configure phishing infrastructure")
-    parser.add_argument("provider", choices=["godaddy", "cloudflare"], help="DNS provider to configure")
+    parser.add_argument("-p", "--provider", choices=["godaddy", "cloudflare"], help="DNS provider to configure", required=True)
     parser.add_argument("-d", "--domain", help="Domain to add", required=True)
     parser.add_argument("-s", "--sender", help="Phishing sender", required=True)
     args = parser.parse_args()

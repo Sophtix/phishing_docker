@@ -1,10 +1,9 @@
 #!/bin/bash
-
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <domain>"
     exit 1
 fi
-
+cd /opt/phishing_docker
 cp nginx/vhost.conf nginx/conf.d/$1.conf
 sed -i "s/DOMAIN_NAME/$1/g" nginx/conf.d/$1.conf
 
