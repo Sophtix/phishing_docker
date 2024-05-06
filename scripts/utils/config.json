@@ -3,7 +3,7 @@
     "dns": {
         "MX": [
         {
-          "name": "{{domain}}",
+          "name": "@",
           "content": "mail.helpdesktops.com",
           "priority": 10  
         }],
@@ -22,7 +22,7 @@
             "content": "v=DMARC1;p=quarantine;rua=mailto:reports@{{domain}};"
         },
         {
-            "name": "dkim._domain",
+            "name": "dkim._domainkey",
             "content": "{{dkim}}"
         }]
     },
