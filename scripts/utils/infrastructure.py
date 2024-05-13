@@ -93,7 +93,8 @@ def config_godaddy(domain: str, dkim: str):
     res = session.put(f"{base_url}/v1/domains/{domain}/records", json=dns_records)
     if res.status_code != 200:
         data = res.json()
-        print(f"Error modifying DNS records: {data['message']}")
+        print(f"Error modifying DNS records")
+        print(data)
         exit(1)
 
 

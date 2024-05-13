@@ -3,6 +3,7 @@ if [ $# -ne 1 ]; then
     echo "Usage: $0 <domain>"
     exit 1
 fi
+
 script_dir=$(dirname $0)
 cd $script_dir/../..
 
