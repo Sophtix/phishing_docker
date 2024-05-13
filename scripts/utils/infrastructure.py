@@ -52,7 +52,7 @@ def config_smtp(domain: str, sender: str) -> str:
 
     res = session.get(f"{base_url}/get/dkim/{domain}")
     data = res.json()
-    if res.status_code != 200 or data['type'] == "error":
+    if res.status_code != 200 and data['type'] == "error":
         print(f"Error getting DKIM: {data['msg']}")
         exit(1)
     return data['dkim_txt']
