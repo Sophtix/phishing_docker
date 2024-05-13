@@ -31,7 +31,7 @@ def config_smtp(domain: str, sender: str) -> str:
     }
     res = session.post(f"{base_url}/add/domain", json=add_domain)
     data = res.json()
-    if res.status_code != 200 or data['type'] == "error":
+    if res.status_code != 200 and data['type'] == "error":
         print(f"Error adding domain: {data['msg']}")
         exit(1)
 
@@ -46,7 +46,7 @@ def config_smtp(domain: str, sender: str) -> str:
     }
     res = session.post(f"{base_url}/add/mailbox", json=add_mailbox)
     data = res.json()
-    if res.status_code != 200 or data['type'] == "error":
+    if res.status_code != 200 and data['type'] == "error":
         print(f"Error adding mailbox: {data['msg']}")
         exit(1)
 
