@@ -30,7 +30,10 @@ def config_smtp(domain: str, sender: str) -> str:
         "restart_sogo": "10"
     }
     res = session.post(f"{base_url}/add/domain", json=add_domain)
-    res.raise_for_status()
+    data = res.json()
+    if res.status_code != 200 or data['type'] == "error":
+        print(f"Error adding domain: {data['msg']}")
+        exit(1)
 
     # Add mailbox
     add_mailbox = {
@@ -42,25 +45,17 @@ def config_smtp(domain: str, sender: str) -> str:
         "password2": mailcow_config['mailbox_passowrd']
     }
     res = session.post(f"{base_url}/add/mailbox", json=add_mailbox)
-    res.raise_for_status()
+    data = res.json()
+    if res.status_code != 200 or data['type'] == "error":
+        print(f"Error adding mailbox: {data['msg']}")
+        exit(1)
 
     res = session.get(f"{base_url}/get/dkim/{domain}")
-    res.raise_for_status()
-    return res.json()['dkim_txt']
-
-
-# def config_nginx(domain: str):
-#     print(f"Configuring Nginx for {domain}")
-#     add_domain_path = Path(__file__).parent / "add_domain.sh"
-#     proc = subprocess.Popen(f"/bin/bash {add_domain_path} {domain}", shell=True, text=True, stdin=subprocess.PIPE,
-#                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=add_domain_path.parent.parent)
-#     while proc.poll() is None:
-#         stdout, stderr = proc.communicate()
-#         if stdout:
-#             print(stdout)
-#         if stderr:
-#             print(stderr)
-        
+    data = res.json()
+    if res.status_code != 200 or data['type'] == "error":
+        print(f"Error getting DKIM: {data['msg']}")
+        exit(1)
+    return data['dkim_txt']
 
 
 def generate_dns_records(domain: str, dkim: str) -> list[dict[str, str]]:
@@ -96,9 +91,9 @@ def config_godaddy(domain: str, dkim: str):
     dns_records.extend(nameservers)
 
     res = session.put(f"{base_url}/v1/domains/{domain}/records", json=dns_records)
+    data = res.json()
     if res.status_code != 200:
-        print(f"Error code: {res.status_code}")
-        print(res.json())
+        print(f"Error modifying DNS records: {data['message']}")
         exit(1)
 
 

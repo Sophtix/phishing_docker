@@ -1,8 +1,27 @@
 #!/bin/bash
-SHORT_OPTS="p:d:s:"
+
+function help() {
+  echo "Usage: $0 -p/--provider [ godaddy | cloudflare ] -d/--domain <domain> -s/--sender <sender>"
+  echo "Options:"
+  echo "  -p, --provider [ godaddy | cloudflare ] The DNS provider"
+  echo "  -d, --domain <domain>      The domain to use for the phishing site"
+  echo "  -s, --sender <sender>      The email address to use as the sender. Will be appended to the domain"
+  echo "  -h, --help                 Display this help and exit"
+  echo "Example:"
+  echo "  create a phishing site for example.com using godaddy as the DNS provider and admin@example.com as the sender:"
+  echo "  $0 -p godaddy -d example.com -s admin"
+  exit 0
+}
+
+function usage() {
+  echo "Usage: $0 -p/--provider [ godaddy | cloudflare ] -d/--domain <domain> -s/--sender <sender>"
+  exit 1
+}
+
+SHORT_OPTS="p:d:s:h"
 
 # Define long options for getopt (separated by :)
-LONG_OPTS="provider:,domain:,sender:"
+LONG_OPTS="provider:,domain:,sender:,help"
 
 PARSED=$(getopt -o $SHORT_OPTS -l $LONG_OPTS -n "$0" -- "$@")
 # Check for parsing errors
@@ -10,7 +29,6 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 eval set -- "${PARSED}"
-provider=n domain=n sender=n
 # Process arguments using getopts
 while true; do
   case "$1" in
@@ -26,6 +44,9 @@ while true; do
         sender="$2"
         shift 2
         ;;
+    -h | --help)
+        help
+        ;;
     --)
         shift
         break
@@ -38,8 +59,7 @@ while true; do
 done
 
 if [[ -z "$provider" || -z "$domain" || -z "$sender" ]]; then
-  echo "Error: Missing required arguments. Please provide -p/--provider, -d/--domain, and -s/--sender." >&2
-  exit 1
+  usage
 fi
 # Shift arguments to remove parsed options (optional)
 shift $(($OPTIND - 1))
