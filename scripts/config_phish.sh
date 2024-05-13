@@ -67,4 +67,9 @@ shift $(($OPTIND - 1))
 scripts_dir=$(dirname $0)
 utils_dir=$scripts_dir/utils
 python3 $utils_dir/infrastructure.py -p $provider -d $domain -s $sender
+
+if [[ $? -ne 0 ]]; then
+  exit 1
+fi
+
 bash $utils_dir/add_domain.sh $domain
