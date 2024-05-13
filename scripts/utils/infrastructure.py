@@ -83,7 +83,7 @@ def config_godaddy(domain: str, dkim: str):
     godaddy_config = config['godaddy']
     base_url = godaddy_config['url']
     session = requests.Session()
-    session.headers.update({"Authorization": f"sso-key {godaddy_config['apikey']}:{godaddy_config['secret']}"})
+    session.headers.update({"Authorization": f"sso-key {godaddy_config['apikey']}:{godaddy_config['secret']}", "Content-Type": "application/json", "Accept": "application/json"})
 
     # Set DNS records
     dns_records = generate_dns_records(domain, dkim)
