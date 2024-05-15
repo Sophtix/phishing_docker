@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:stable-slim
 
 RUN apt-get -y update && apt-get -y dist-upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y wget curl make nano git apt-utils && \

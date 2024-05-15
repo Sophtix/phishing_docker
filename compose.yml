@@ -43,6 +43,12 @@ services:
   #     - ./evilginx/conf/:/etc/evilginx/:ro
   #     - ./evilginx/phishlets/:/opt/evilginx/phishlets/:ro
 
+  antirelay:
+    container_name: antirelay
+    build:
+      context: ./antirelay
+      dockerfile: Dockerfile
+
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -58,6 +64,7 @@ services:
     depends_on:
       - gophish
       - evilgophish
+      - antirelay
 
   certbot:
     container_name: certbot
