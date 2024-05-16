@@ -1,8 +1,5 @@
 FROM nginx:latest
 
-# Copy custom Nginx configuration file
-COPY gophish_admin.conf /etc/nginx/conf.d/gophish_admin.conf
-
 ARG GOPHISH_HOST
 ARG EVILGOPHISH_HOST
 
