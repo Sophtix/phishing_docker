@@ -25,4 +25,4 @@ RUN pip install -r requirements.txt
 EXPOSE 80
 
 # run gunicorn with flask app
-CMD ["python3", "gunicorn", "-b", "0.0.0.0:80", "wsgi:app"]
+CMD ["python3", "-m", "gunicorn", "-b", "0.0.0.0:80", "wsgi:app"]
