@@ -13,10 +13,10 @@ function usage() {
   exit 1
 }
 
-SHORT_OPTS="d:p"
+SHORT_OPTS="pd:"
 
 # Define long options for getopt (separated by :)
-LONG_OPTS="proxy,domain:"
+LONG_OPTS="domain:,proxy"
 
 PARSED=$(getopt -o $SHORT_OPTS -l $LONG_OPTS -n "$0" -- "$@")
 # Check for parsing errors
@@ -29,7 +29,7 @@ while true; do
   case "$1" in
     -p | --proxy)
         proxy=true
-        shift 2
+        shift 1
         ;;
     -d | --domain)
         domain="$2"
