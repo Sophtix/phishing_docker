@@ -46,7 +46,6 @@ fi
 shift $(($OPTIND - 1))
 
 script_dir=$(dirname $0)
-cd $script_dir/../..
 
-rm nginx/nginx/conf.d/$domain.conf
-rm -rf certbot/conf/live/$domain
+rm $script_dir/../../nginx/nginx/conf.d/$domain.conf
+rm -rf $script_dir/../../certbot/conf/live/$domain

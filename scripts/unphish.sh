@@ -66,5 +66,5 @@ utils_dir=$scripts_dir/utils
 
 # Check if vh is already created
 if [[ -f $scripts_dir/../nginx/nginx/conf.d/$domain.conf ]]; then
-  $utils_dir/remove_vhost.sh -d $domain
+  /bin/bash $utils_dir/remove_vhost.sh -d $domain
 fi

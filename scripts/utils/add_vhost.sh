@@ -64,7 +64,7 @@ if [ -f nginx/nginx/conf.d/$domain.conf ]; then
     # Ask to remove the existing vhost
     read -p "Do you want to remove the existing virtual host? [y/n]: " remove_vhost
     if [ "$remove_vhost" == "y" ]; then
-        $script_dir/remove_vhost.sh -d $domain
+        /bin/bash $script_dir/remove_vhost.sh -d $domain
     else
         exit 1
     fi
