@@ -10,7 +10,7 @@ import requests
 def is_microsoft_ans(ip):
     res = IPWhois(ip).lookup_rdap(depth=1)
     try:
-        if 'microsoft' in res['objects']['MSFT']['contact']['name'].lower():
+        if 'microsoft' in res['asn_description'].lower():
             return True
     except KeyError:
         pass
