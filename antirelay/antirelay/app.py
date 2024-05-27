@@ -47,7 +47,10 @@ def redirect_to_gophish(path):
         allow_redirects = False,
     )
     app.logger.info(f'FORWARD - "{request.method} {query_string} {data}" to gophish/{path} - {len(res.content)}')
-    headers = [(k,v) for k,v in res.raw.headers.items()]
+    
+    excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
+    headers = [(name, value) for (name, value) in res.raw.headers.items()
+               if name.lower() not in excluded_headers]
 
     response = Response(res.content, res.status_code, headers)
     return response
