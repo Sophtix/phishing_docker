@@ -67,4 +67,5 @@ utils_dir=$scripts_dir/utils
 # Check if vh is already created
 if [[ -f $scripts_dir/../nginx/nginx/conf.d/$domain.conf ]]; then
   /bin/bash $utils_dir/remove_vhost.sh -d $domain
+  python3 $utils_dir/infrastructure.py -p $provider -d $domain -s $sender --remove
 fi
