@@ -69,7 +69,7 @@ fi
 # Shift arguments to remove parsed options (optional)
 shift $(($OPTIND - 1))
 
-scripts_dir=$(dirname $0)
+scripts_dir=$(dirname $(realpath $0))
 utils_dir=$scripts_dir/utils
 python3 $utils_dir/infrastructure.py -p $provider -d $domain -s $sender
 

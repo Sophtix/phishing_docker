@@ -4,7 +4,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-script_dir=$(dirname $0)
+script_dir=$(dirname $(realpath $0))
 pushd $script_dir/../..
 
 cp nginx/vhost.conf nginx/nginx/conf.d/$1.conf

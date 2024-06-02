@@ -1,5 +1,5 @@
 #!/bin/bash
-scripts_dir=$(dirname $0)
+scripts_dir=$(dirname $(realpath $0))
 cd $scripts_dir/..
 
 # Build images and create containers

@@ -45,7 +45,7 @@ if [[ -z "$domain" ]]; then
 fi
 shift $(($OPTIND - 1))
 
-script_dir=$(dirname $0)
+script_dir=$(dirname $(realpath $0))
 
 rm $script_dir/../../nginx/nginx/conf.d/$domain.conf
 docker compose exec certbot certbot delete --cert-name $domain
