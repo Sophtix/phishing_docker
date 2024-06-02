@@ -1,2 +1,7 @@
 .idea
 mysql/data/
+nginx/nginx/conf.d/
+certbot/conf/
+certbot/www/
+
+!nginx/nginx/conf.d/default.conf
