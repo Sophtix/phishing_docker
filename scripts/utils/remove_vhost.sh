@@ -48,4 +48,5 @@ shift $(($OPTIND - 1))
 script_dir=$(dirname $0)
 
 rm $script_dir/../../nginx/nginx/conf.d/$domain.conf
-rm -rf $script_dir/../../certbot/conf/live/$domain
+docker compose exec certbot certbot delete --cert-name $domain
+docker compose exec nginx nginx -s reload

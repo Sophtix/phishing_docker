@@ -56,7 +56,7 @@ fi
 shift $(($OPTIND - 1))
 
 script_dir=$(dirname $0)
-cd $script_dir/../..
+pushd $script_dir/../..
 
 # Check if vhost already exists
 if [ -f nginx/nginx/conf.d/$domain.conf ]; then
@@ -87,3 +87,5 @@ fi
 
 sed -i 's/#//g' nginx/nginx/conf.d/$domain.conf
 docker compose exec nginx nginx -s reload
+
+popd

@@ -5,7 +5,7 @@ if [ $# -ne 1 ]; then
 fi
 
 script_dir=$(dirname $0)
-cd $script_dir/../..
+pushd $script_dir/../..
 
 cp nginx/vhost.conf nginx/nginx/conf.d/$1.conf
 sed -i "s/DOMAIN_NAME/$1/g" nginx/nginx/conf.d/$1.conf
@@ -14,3 +14,5 @@ docker compose run --rm certbot certonly --webroot -w /var/www/certbot/ -d $1 --
 
 sed -i 's/#//g' nginx/nginx/conf.d/$1.conf
 docker compose exec nginx nginx -s reload
+
+popd

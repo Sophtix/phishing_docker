@@ -131,7 +131,15 @@ def config_cloudflare(domain: str, dkim: str):
     res.raise_for_status()
 
 
-def main(domain, sender, provider):
+def delete_godaddy(domain: str):
+    pass
+
+
+def delete_smtp(domain: str, sender: str):
+    pass
+
+
+def phish(domain, sender, provider):
     dkim = config_smtp(domain, sender)
     if not dkim:
         print("Failed to configure SMTP")
@@ -141,7 +149,10 @@ def main(domain, sender, provider):
             config_godaddy(domain, dkim)
         case "cloudflare":
             config_cloudflare(domain, dkim)
-    # config_nginx(domain)
+
+
+def unphish(domain, sender, provider):
+    pass
 
 
 if __name__ == "__main__":
@@ -149,10 +160,17 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--provider", choices=["godaddy", "cloudflare"], help="DNS provider to configure", required=True)
     parser.add_argument("-d", "--domain", help="Domain to add", required=True)
     parser.add_argument("-s", "--sender", help="Phishing sender", required=True)
+    parser.add_argument("-r", "--remove", help="Remove domain", action="store_true")
     args = parser.parse_args()
 
     config_path = Path(__file__).parent / "config.json"
     with open(config_path) as f:
         config = json.load(f)
 
-    main(args.domain, args.sender, args.provider)
+    if args.remove:
+        print(f"Deleting infrastructure for domain {args.domain} and sender {args.sender}@{args.domain} using {args.provider}")
+        unphish(args.domain, args.sender, args.provider)
+    else:
+        print(f"Configuring infrastructure for domain {args.domain} and sender {args.sender}@{args.domain} using {args.provider}")
+        phish(args.domain, args.sender, args.provider)
+        
