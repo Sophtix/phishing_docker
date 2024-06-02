@@ -55,7 +55,7 @@ fi
 # Shift arguments to remove parsed options (optional)
 shift $(($OPTIND - 1))
 
-script_dir=$(dirname $0)
+script_dir=$(dirname $(realpath $0))
 pushd $script_dir/../..
 
 # Check if vhost already exists
@@ -65,6 +65,10 @@ if [ -f nginx/nginx/conf.d/$domain.conf ]; then
     read -p "Do you want to remove the existing virtual host? [y/n]: " remove_vhost
     if [ "$remove_vhost" == "y" ]; then
         /bin/bash $script_dir/remove_vhost.sh -d $domain
+	if [ $? -ne 0 ]; then
+		echo "Failed to remove old vhost"
+		exit 1
+	fi
     else
         exit 1
     fi
