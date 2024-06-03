@@ -21,7 +21,8 @@ def crawler(fn):
         client_ip = request.headers.get('X-Forwarded-For', '').split(',')[0] # or request.remote_addr
         if is_microsoft_ans(client_ip) or not request.headers.get('Accept', ''):
             app.logger.warning(f"REDIRECTED")
-            return redirect('https://google.com')
+            # return redirect('https://google.com')
+            return Response('<html lang="en"><head><title>el gato</title></head><body><img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Photograph_of_Socks_the_Cat-_07-13-1994_%286461517483%29.jpg"></body></html>', status=200, mimetype='text/html')
         return fn(*args, **kwargs)
     return wrapper
 
